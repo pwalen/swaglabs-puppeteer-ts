@@ -34,3 +34,38 @@ describe('Access control for inventory page', () => {
     );
   });
 });
+
+describe('Inventory Page - UI elements visibility', () => {
+  jest.setTimeout(10000);
+
+  let browser: Browser;
+  let page: Page;
+  let loginPage: LoginPage;
+  let inventoryPage: InventoryPage;
+
+  beforeAll(async () => {
+    browser = await puppeteer.launch({
+      headless: true,
+      slowMo: 0,
+    });
+    page = await browser.newPage();
+    loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
+    await loginPage.open();
+  });
+
+  afterAll(async () => {
+    await browser.close();
+  });
+
+  test('should display the product list after successful login', async () => {
+    await loginPage.open();
+    await loginPage.login(
+      loginPage.acceptedUsernames.STANDARD_USER,
+      loginPage.acceptedPasswords.PASSWORD
+    );
+    const inventoryListVisibility =
+      await inventoryPage.isInventoryListVisible();
+    expect(inventoryListVisibility).toBeTruthy();
+  });
+});

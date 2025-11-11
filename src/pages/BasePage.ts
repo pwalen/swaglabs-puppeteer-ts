@@ -31,6 +31,18 @@ export class BasePage {
     return title;
   }
 
+  async isElementVisible(
+    selector: string,
+    timeoutMS?: number
+  ): Promise<boolean> {
+    return (
+      (await this.page.waitForSelector(selector, {
+        visible: true,
+        timeout: timeoutMS ?? this.defaultTimeoutMS,
+      })) !== null
+    );
+  }
+
   async getText(selector: string, timeoutMS?: number): Promise<string> {
     const text = await this.page.waitForSelector(selector, {
       timeout: timeoutMS ?? this.defaultTimeoutMS,
