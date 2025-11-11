@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import { Browser, Page } from 'puppeteer';
-import { LoginPage } from '../pages/public/LoginPage';
-import { InventoryPage } from '../pages/secure/InventoryPage';
+import { LoginPage } from '@pages/public/LoginPage';
+import { InventoryPage } from '@pages/secure/InventoryPage';
 
 describe('Access control for inventory page', () => {
   jest.setTimeout(10000);

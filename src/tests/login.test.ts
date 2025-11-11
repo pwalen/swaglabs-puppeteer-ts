@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import { Browser, Page } from 'puppeteer';
-import { LoginPage } from '../pages/public/LoginPage';
-import { InventoryPage } from '../pages/secure/InventoryPage';
+import { LoginPage } from '@pages/public/LoginPage';
+import { InventoryPage } from '@pages/secure/InventoryPage';
 
 describe('Login Page - basic tests', () => {
   jest.setTimeout(10000);

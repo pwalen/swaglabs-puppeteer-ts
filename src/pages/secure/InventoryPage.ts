@@ -1,7 +1,6 @@
 import { Page } from 'puppeteer';
 import { BasePage } from '../BasePage';
-import { URLS } from '../data/urls';
-
+import { URLS } from '@data/urls';
 
 export class InventoryPage extends BasePage {
   urls: typeof URLS;

@@ -1,11 +1,15 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
+    /* ===========================================================
+     * 📂 File Layout
+     * =========================================================== */
+    "rootDir": "./src",
+    "outDir": "./dist",
 
-    // Environment Settings
+    /* ===========================================================
+     * 🌐 Environment Settings
+     * =========================================================== */
     // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "target": "esnext",
@@ -15,16 +19,36 @@
     // "types": ["node"],
     // and npm install -D @types/node
 
-    // Other Outputs
+    /* ===========================================================
+     * 📦 Module Resolution & Imports
+     * =========================================================== */
+    "baseUrl": "./src",
+    "paths": {
+      "@data/*": ["data/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"]
+    },
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+
+    /* ===========================================================
+     * 🧭 Outputs
+     * =========================================================== */
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
+    /* ===========================================================
+     * 🔍 Type Checking Options
+     * =========================================================== */
+    "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Style Options
+    /* ===========================================================
+     * 🧩 Style Options
+     * =========================================================== */
     // "noImplicitReturns": true,
     // "noImplicitOverride": true,
     // "noUnusedLocals": true,
@@ -32,8 +56,9 @@
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
 
-    // Recommended Options
-    "strict": true,
+    /* ===========================================================
+     * 💡 Additional Recommended Options
+     * =========================================================== */
     "jsx": "react-jsx",
     "verbatimModuleSyntax": false,
     "isolatedModules": true,

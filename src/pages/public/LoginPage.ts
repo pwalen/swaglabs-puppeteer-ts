@@ -1,14 +1,14 @@
 import { Page } from 'puppeteer';
 import { BasePage } from '../BasePage';
-import { URLS } from '../data/urls';
-import { LOCATORS_LOGIN_PAGE } from '../data/locators';
-import { PAGE_DATA } from '../data/pageData';
+import { URLS } from '@data/urls';
+import { LOCATORS_LOGIN_PAGE } from '@data/locators';
+import { PAGE_DATA } from '@data/pageData';
 import {
   ACCEPTED_USERNAMES,
   ACCEPTED_PASSWORDS,
   INCORRECT_USERNAMES,
   INCORRECT_PASSWORDS,
-} from '../data/loginData';
+} from '@data/loginData';
 
 export class LoginPage extends BasePage {
   urls: typeof URLS;
