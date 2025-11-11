@@ -1,10 +1,9 @@
 import puppeteer from 'puppeteer';
 import { Browser, Page } from 'puppeteer';
 import { LoginPage } from '../pages/public/LoginPage';
-import { InventoryPage } from '../pages/secure/inventoryPage';
-import { log } from 'console';
+import { InventoryPage } from '../pages/secure/InventoryPage';
 
-describe('Login Page - basic tests', function () {
+describe('Login Page - basic tests', () => {
   jest.setTimeout(10000);
 
   let browser: Browser;
@@ -35,7 +34,7 @@ describe('Login Page - basic tests', function () {
   });
 });
 
-describe('Login Page - incorrect credentials', function () {
+describe('Login Page - incorrect credentials', () => {
   jest.setTimeout(10000);
 
   let browser: Browser;
@@ -130,7 +129,7 @@ describe('Login Page - incorrect credentials', function () {
   });
 });
 
-describe('Login Page - correct credentials', function () {
+describe('Login Page - correct credentials', () => {
   jest.setTimeout(10000);
 
   let browser: Browser;
