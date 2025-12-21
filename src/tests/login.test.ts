@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import { Browser, Page } from 'puppeteer';
 import { LoginPage } from '@pages/public/LoginPage';
 import { InventoryPage } from '@pages/secure/InventoryPage';
+import { givenUserIsOnLoginPage } from './helpers/login.helpers';
 
 describe('Login Page - basic tests', () => {
   jest.setTimeout(10000);
@@ -20,7 +21,6 @@ describe('Login Page - basic tests', () => {
   beforeEach(async () => {
     page = await browser.newPage();
     loginPage = new LoginPage(page);
-    await loginPage.open();
   });
 
   afterEach(async () => {
@@ -32,10 +32,11 @@ describe('Login Page - basic tests', () => {
   });
 
   test('Should open login page', async () => {
-    await loginPage.open();
+    await givenUserIsOnLoginPage(loginPage);
   });
 
   test('Should have correct title', async () => {
+    await givenUserIsOnLoginPage(loginPage);
     const title = await loginPage.getPageTitle();
     expect(title).toBe(loginPage.pageData.PAGE_TITLE);
   });
@@ -53,32 +54,30 @@ describe('Login Page - incorrect credentials', () => {
       headless: true,
       slowMo: 0,
     });
+  });
+
+  beforeEach(async () => {
     page = await browser.newPage();
     loginPage = new LoginPage(page);
-    await loginPage.open();
+  });
+
+  afterEach(async () => {
+    await page.close();
   });
 
   afterAll(async () => {
     await browser.close();
   });
 
-  test('Should open login page', async () => {
-    await loginPage.open();
-  });
-
-  test('Should have correct title', async () => {
-    const title = await loginPage.getPageTitle();
-    expect(title).toBe(loginPage.pageData.PAGE_TITLE);
-  });
-
   test('Should display an error for empty username and password fields', async () => {
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.click(loginPage.locators.SUBMIT);
     const errorMessage = await loginPage.getText(loginPage.locators.ERROR);
     expect(errorMessage).toBe(loginPage.pageData.USERNAME_IS_REQUIRED);
   });
 
   test('Should display an error for correct username and empty password field', async () => {
-    await loginPage.reloadPage();
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.type(
       loginPage.locators.USERNAME,
       loginPage.acceptedUsernames.STANDARD_USER
@@ -89,7 +88,7 @@ describe('Login Page - incorrect credentials', () => {
   });
 
   test('Should display an error for empty username field and correct password', async () => {
-    await loginPage.reloadPage();
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.type(
       loginPage.locators.PASSWORD,
       loginPage.acceptedPasswords.PASSWORD
@@ -100,7 +99,7 @@ describe('Login Page - incorrect credentials', () => {
   });
 
   test('Should display an error for correct username and wrong password', async () => {
-    await loginPage.reloadPage();
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.login(
       loginPage.acceptedUsernames.STANDARD_USER,
       loginPage.incorrectPasswords.INCORRECT_PASSWORD
@@ -112,7 +111,7 @@ describe('Login Page - incorrect credentials', () => {
   });
 
   test('Should display an error for wrong username and correct password', async () => {
-    await loginPage.reloadPage();
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.login(
       loginPage.incorrectUsernames.INCORRECT_USERNAME,
       loginPage.acceptedPasswords.PASSWORD
@@ -124,7 +123,7 @@ describe('Login Page - incorrect credentials', () => {
   });
 
   test('Should display an error for wrong username and wrong password', async () => {
-    await loginPage.reloadPage();
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.login(
       loginPage.incorrectUsernames.INCORRECT_USERNAME,
       loginPage.incorrectPasswords.INCORRECT_PASSWORD
@@ -149,33 +148,28 @@ describe('Login Page - correct credentials', () => {
       headless: true,
       slowMo: 0,
     });
+  });
+
+  beforeEach(async () => {
     page = await browser.newPage();
     loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
-    await loginPage.open();
+  });
+
+  afterEach(async () => {
+    await page.close();
   });
 
   afterAll(async () => {
     await browser.close();
   });
 
-  test('Should open login page', async () => {
-    await loginPage.open();
-  });
-
-  test('Should have correct title', async () => {
-    const title = await loginPage.getPageTitle();
-    expect(title).toBe(loginPage.pageData.PAGE_TITLE);
-  });
-
   test('Should enter and submit correct credentials', async () => {
+    await givenUserIsOnLoginPage(loginPage);
     await loginPage.login(
       loginPage.acceptedUsernames.STANDARD_USER,
       loginPage.acceptedPasswords.PASSWORD
     );
-  });
-
-  test('Should open the Inventory page', async () => {
     const url = await inventoryPage.getPageURL();
     expect(url).toBe(inventoryPage.urls.URL_INVENTORY_PAGE);
   });
