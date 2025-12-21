@@ -15,9 +15,16 @@ describe('Login Page - basic tests', () => {
       headless: true,
       slowMo: 0,
     });
+  });
+
+  beforeEach(async () => {
     page = await browser.newPage();
     loginPage = new LoginPage(page);
     await loginPage.open();
+  });
+
+  afterEach(async () => {
+    await page.close();
   });
 
   afterAll(async () => {
