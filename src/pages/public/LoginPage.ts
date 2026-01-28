@@ -1,14 +1,14 @@
 import { Page } from 'puppeteer';
 import { BasePage } from '../BasePage';
 import { URLS } from '@data/urls';
-import { LOCATORS_LOGIN_PAGE } from '@data/locators';
-import { PAGE_DATA } from '@data/pageData';
+import { LOCATORS_LOGIN_PAGE } from './LoginPage.locators';
 import {
   ACCEPTED_USERNAMES,
   ACCEPTED_PASSWORDS,
   INCORRECT_USERNAMES,
   INCORRECT_PASSWORDS,
-} from '@data/loginData';
+  PAGE_DATA,
+} from './LoginPage.data';
 
 export class LoginPage extends BasePage {
   urls: typeof URLS;
@@ -54,9 +54,19 @@ export class LoginPage extends BasePage {
     await super.reloadPage();
   }
 
-  async login(username: string, password: string): Promise<void> {
+  async typeUsername(username: string): Promise<void> {
     await this.type(this.locators.USERNAME, username);
+  }
+
+  async typePassword(password: string): Promise<void> {
     await this.type(this.locators.PASSWORD, password);
+  }
+
+  async submit(): Promise<void> {
     await this.click(this.locators.SUBMIT);
+  }
+
+  async getErrorMessage(): Promise<string> {
+    return await super.getText(this.locators.ERROR);
   }
 }

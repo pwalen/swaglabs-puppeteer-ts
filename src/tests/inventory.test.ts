@@ -30,7 +30,7 @@ describe('Access control for inventory page', () => {
     await inventoryPage.open();
     const errorMessage = await loginPage.getText(loginPage.locators.ERROR);
     expect(errorMessage).toBe(
-      loginPage.pageData.ONLY_ACCESS_INVENTORY_WHEN_LOGGED_IN
+      loginPage.pageData.ONLY_ACCESS_INVENTORY_WHEN_LOGGED_IN,
     );
   });
 });
@@ -62,7 +62,7 @@ describe('Inventory Page - UI elements visibility', () => {
     await loginPage.open();
     await loginPage.login(
       loginPage.acceptedUsernames.STANDARD_USER,
-      loginPage.acceptedPasswords.PASSWORD
+      loginPage.acceptedPasswords.PASSWORD,
     );
     const inventoryListVisibility =
       await inventoryPage.isInventoryListVisible();

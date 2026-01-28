@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer';
 import { BasePage } from '../BasePage';
 import { URLS } from '@data/urls';
-import { LOCATORS_INVENTORY_PAGE } from '@data/locators';
+import { LOCATORS_INVENTORY_PAGE } from './InventoryPage.locators';
 
 export class InventoryPage extends BasePage {
   urls: typeof URLS;
