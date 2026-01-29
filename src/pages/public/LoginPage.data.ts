@@ -1,3 +1,9 @@
+type KeysOf<T> = keyof T;
+type ValuesOf<T> = T[keyof T];
+
+export type PageDataKey = KeysOf<typeof PAGE_DATA>;
+export type PageDataValue = ValuesOf<typeof PAGE_DATA>;
+
 export const ACCEPTED_USERNAMES = {
   STANDARD_USER: 'standard_user',
   LOCKED_OUT_USER: 'locked_out_user',
