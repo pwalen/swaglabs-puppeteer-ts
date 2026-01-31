@@ -1,4 +1,3 @@
-import { Page } from 'puppeteer';
 import { BasePage } from '../BasePage';
 import { URLS } from '@data/urls';
 import { LOCATORS_LOGIN_PAGE } from './LoginPage.locators';
@@ -9,32 +8,11 @@ import {
   INCORRECT_PASSWORDS,
   PAGE_DATA,
   PageDataKey,
-  PageDataValue,
 } from './LoginPage.data';
 
 export class LoginPage extends BasePage {
   async open(): Promise<void> {
     await super.open(URLS.URL_LOGIN_PAGE);
-  }
-
-  async getPageTitle(): Promise<string> {
-    return await super.getPageTitle();
-  }
-
-  async getText(selector: string): Promise<string> {
-    return await super.getText(selector);
-  }
-
-  async click(selector: string): Promise<void> {
-    await super.click(selector);
-  }
-
-  async type(selector: string, text: string): Promise<void> {
-    await super.type(selector, text);
-  }
-
-  async reloadPage(): Promise<void> {
-    await super.reloadPage();
   }
 
   async typeUsername(username: string): Promise<void> {

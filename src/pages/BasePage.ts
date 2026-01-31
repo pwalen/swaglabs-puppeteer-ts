@@ -33,7 +33,7 @@ export class BasePage {
 
   async isElementVisible(
     selector: string,
-    timeoutMS?: number
+    timeoutMS?: number,
   ): Promise<boolean> {
     return (
       (await this.page.waitForSelector(selector, {
@@ -61,7 +61,7 @@ export class BasePage {
   async type(
     selector: string,
     text: string,
-    timeoutMS?: number
+    timeoutMS?: number,
   ): Promise<void> {
     await this.page.waitForSelector(selector, {
       timeout: timeoutMS ?? this.defaultTimeoutMS,
@@ -74,5 +74,9 @@ export class BasePage {
       waitUntil: 'networkidle0',
       timeout: timeoutMS ?? this.defaultTimeoutMS,
     });
+  }
+
+  getPage(): Page {
+    return this.page;
   }
 }
