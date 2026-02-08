@@ -2,7 +2,7 @@ import { getPage } from '../test-setup/jest.puppeteer.setup';
 import { InventoryPage } from '@pages/secure/InventoryPage';
 import { LoginPage } from '@pages/public/LoginPage';
 
-const EXPECTED_PRODUCTS = [
+const EXPECTED_PRODUCT_NAMES = [
   'Sauce Labs Backpack',
   'Sauce Labs Bike Light',
   'Sauce Labs Bolt T-Shirt',
@@ -29,7 +29,7 @@ describe('Inventory Page - products', () => {
     const products = await inventoryPage.getProducts();
     const productNames = products.map(p => p.name);
 
-    expect(productNames).toStrictEqual(EXPECTED_PRODUCTS);
+    expect(productNames).toStrictEqual(EXPECTED_PRODUCT_NAMES);
     expect(products.length).toBe(6);
   });
 

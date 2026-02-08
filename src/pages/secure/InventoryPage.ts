@@ -1,4 +1,4 @@
-import { BasePage } from '../BasePage';
+import { BasePage } from '@pages/BasePage';
 import { URLS } from '@data/urls';
 import { LOCATORS_INVENTORY_PAGE } from './InventoryPage.locators';
 import { Product } from './InventoryPage.data';
