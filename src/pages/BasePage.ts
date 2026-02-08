@@ -75,8 +75,4 @@ export class BasePage {
       timeout: timeoutMS ?? this.defaultTimeoutMS,
     });
   }
-
-  getPage(): Page {
-    return this.page;
-  }
 }

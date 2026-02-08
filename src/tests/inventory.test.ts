@@ -2,6 +2,15 @@ import { getPage } from '../test-setup/jest.puppeteer.setup';
 import { InventoryPage } from '@pages/secure/InventoryPage';
 import { LoginPage } from '@pages/public/LoginPage';
 
+const EXPECTED_PRODUCTS = [
+  'Sauce Labs Backpack',
+  'Sauce Labs Bike Light',
+  'Sauce Labs Bolt T-Shirt',
+  'Sauce Labs Fleece Jacket',
+  'Sauce Labs Onesie',
+  'Test.allTheThings() T-Shirt (Red)',
+];
+
 describe('Inventory Page - products', () => {
   let inventoryPage: InventoryPage;
   let loginPage: LoginPage;
@@ -9,37 +18,33 @@ describe('Inventory Page - products', () => {
   beforeEach(async () => {
     const page = getPage();
     loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
+
+    await loginPage.open();
+    await loginPage.loginWithValidCredentials();
+    expect(await inventoryPage.isLoaded()).toBe(true);
   });
 
   test('should display all expected products', async () => {
-    await loginPage.open();
-    inventoryPage = await InventoryPage.from(loginPage);
-    expect(await inventoryPage.isLoaded()).toBe(true);
-    const productNames = await inventoryPage.getProductNames();
-    const expectedProductNames =
-      inventoryPage.getExpectedProductNames(`PRODUCT_NAMES`);
-    const productCount = await inventoryPage.getProductCount();
-    const expectedProductCount =
-      inventoryPage.getExpectedProductCount(`PRODUCT_COUNT`);
-    expect(productNames).toStrictEqual(expectedProductNames);
-    expect(productCount).toBe(expectedProductCount);
+    const products = await inventoryPage.getProducts();
+    const productNames = products.map(p => p.name);
+
+    expect(productNames).toStrictEqual(EXPECTED_PRODUCTS);
+    expect(products.length).toBe(6);
   });
 
   test('should display product prices correctly', async () => {
-    await loginPage.open();
-    inventoryPage = await InventoryPage.from(loginPage);
-    expect(await inventoryPage.isLoaded()).toBe(true);
-    const productPrices = await inventoryPage.getProductPrices();
+    const products = await inventoryPage.getProducts();
+    const productPrices = products.map(p => p.price);
+
     for (const price of productPrices) {
       expect(price).toMatch(/^\$\d+\.\d{2}$/);
     }
   });
 
   test('should allow adding products to cart', async () => {
-    await loginPage.open();
-    inventoryPage = await InventoryPage.from(loginPage);
-    expect(await inventoryPage.isLoaded()).toBe(true);
-    await inventoryPage.addToCartProduct();
+    await inventoryPage.addToCart(0);
+
     const cartBadgeCount = await inventoryPage.getCartBadgeCount();
     expect(cartBadgeCount).toBe(1);
   });

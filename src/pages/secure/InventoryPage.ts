@@ -1,8 +1,7 @@
 import { BasePage } from '../BasePage';
 import { URLS } from '@data/urls';
-import { LoginPage } from '@pages/public/LoginPage';
 import { LOCATORS_INVENTORY_PAGE } from './InventoryPage.locators';
-import { PAGE_DATA, Product, PageDataKey } from './InventoryPage.data';
+import { Product } from './InventoryPage.data';
 
 export class InventoryPage extends BasePage {
   async open(): Promise<void> {
@@ -15,12 +14,6 @@ export class InventoryPage extends BasePage {
 
   async isInventoryListVisible(): Promise<boolean> {
     return await this.isElementVisible(LOCATORS_INVENTORY_PAGE.INVENTORY_LIST);
-  }
-
-  static async from(loginPage: LoginPage): Promise<InventoryPage> {
-    await loginPage.loginWithValidCredentials();
-    const inventoryPage = new InventoryPage(loginPage.getPage());
-    return inventoryPage;
   }
 
   async isLoaded(): Promise<boolean> {
@@ -55,41 +48,14 @@ export class InventoryPage extends BasePage {
     return products;
   }
 
-  async getProductNames(): Promise<string[]> {
-    const products: Product[] = await this.getProducts();
-    const productNames: string[] = [];
-    for (const product of products) {
-      productNames.push(product.name);
+  async addToCart(index: number): Promise<void> {
+    const buttons = await this.page.$$(LOCATORS_INVENTORY_PAGE.ADD_TO_CART_BTN);
+    if (index >= buttons.length || index < 0) {
+      throw new Error(
+        `Product index ${index} out of range (available: 0-${buttons.length - 1})`,
+      );
     }
-    return productNames;
-  }
-
-  getExpectedProductNames(expectedKey: PageDataKey): string[] {
-    const value = PAGE_DATA[expectedKey];
-    return Array.isArray(value) ? value.slice() : [];
-  }
-
-  async getProductCount(): Promise<number> {
-    const products: Product[] = await this.getProducts();
-    return products.length;
-  }
-
-  getExpectedProductCount(expectedKey: PageDataKey): number {
-    const value = PAGE_DATA[expectedKey];
-    return Number.isInteger(value) ? (value as number) : 0;
-  }
-
-  async getProductPrices(): Promise<string[]> {
-    const products: Product[] = await this.getProducts();
-    const productPrices: string[] = [];
-    for (const product of products) {
-      productPrices.push(product.price);
-    }
-    return productPrices;
-  }
-
-  async addToCartProduct(): Promise<void> {
-    await this.page.click(LOCATORS_INVENTORY_PAGE.ADD_TO_CART_BTN);
+    await buttons[index]!.click();
   }
 
   async getCartBadgeCount(): Promise<number> {
