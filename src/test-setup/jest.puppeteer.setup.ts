@@ -17,6 +17,10 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+  await page.evaluate(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+  });
   await page.close();
 });
 

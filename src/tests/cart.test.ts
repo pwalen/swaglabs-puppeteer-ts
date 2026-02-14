@@ -24,7 +24,7 @@ describe('Cart Page - basic tests', () => {
   });
 
   test('should open cart page', async () => {
-    await cartPage.clickCartLink();
+    await inventoryPage.goToCart();
     expect(await cartPage.isLoaded()).toBe(true);
   });
 });
@@ -46,7 +46,7 @@ describe('Cart Page - manage items', () => {
     await loginPage.loginWithValidCredentials();
     expect(await inventoryPage.isLoaded()).toBe(true);
     await inventoryPage.addToCart(0);
-    await cartPage.clickCartLink();
+    await inventoryPage.goToCart();
     expect(await cartPage.isLoaded()).toBe(true);
   });
 

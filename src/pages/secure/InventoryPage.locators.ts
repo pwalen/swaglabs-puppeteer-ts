@@ -6,4 +6,5 @@ export const LOCATORS_INVENTORY_PAGE = {
   ITEM_DESCRIPTION: '[data-test="inventory-item-desc"]',
   ADD_TO_CART_BTN: 'button[id^="add-to-cart"]',
   CART_BADGE: '[data-test="shopping-cart-badge"]',
+  CART_LINK: '[data-test="shopping-cart-link"]',
 } as const;

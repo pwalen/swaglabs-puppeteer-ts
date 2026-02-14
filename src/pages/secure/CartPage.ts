@@ -58,12 +58,11 @@ export class CartPage extends BasePage {
     await buttons[index]!.click();
   }
 
-  async clickCartLink(): Promise<void> {
-    await this.page.click(LOCATORS_CART_PAGE.CART_LINK);
-  }
-
   async clickCheckout(): Promise<void> {
-    await this.page.click(LOCATORS_CART_PAGE.CHECKOUT_BTN);
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click(LOCATORS_CART_PAGE.CHECKOUT_BTN),
+    ]);
   }
 
   async clickRemove(): Promise<void> {

@@ -56,6 +56,9 @@ export class InventoryPage extends BasePage {
       );
     }
     await buttons[index]!.click();
+    await this.page.waitForSelector(LOCATORS_INVENTORY_PAGE.CART_BADGE, {
+      visible: true,
+    });
   }
 
   async getCartBadgeCount(): Promise<number> {
@@ -68,5 +71,11 @@ export class InventoryPage extends BasePage {
     } else {
       return parseInt(text);
     }
+  }
+  async goToCart(): Promise<void> {
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click(LOCATORS_INVENTORY_PAGE.CART_LINK),
+    ]);
   }
 }
